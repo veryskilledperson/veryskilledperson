@@ -1,0 +1,28 @@
+local on = true
+local distance = 28
+
+local starterGui = game:GetService("StarterGui")
+local plr = game:GetService('Players').LocalPlayer
+local cooldown = false
+game:GetService('RunService').Heartbeat:connect(function()
+    if on then
+    local hum = plr.Character.Humanoid
+        for _,v in ipairs(game.Players:GetPlayers()) do
+            if v.Name ~= plr.Name then
+                local s,e = pcall(function()
+                    local root = v.Character.HumanoidRootPart
+                    local sword = hum.Parent:FindFirstChildOfClass('Tool')
+                    if sword and (root.Position - plr.Character.HumanoidRootPart.Position).Magnitude <= distance then 
+                         if cooldown == false then
+                        cooldown = true
+                        firetouchinterest(sword.Handle, root, 1)
+                        firetouchinterest(sword.Handle, root, 0)
+                        wait(0.05)
+                        cooldown = false
+                        end
+                    end
+                end) if e then print(e) end
+            end
+        end
+    end
+end)
